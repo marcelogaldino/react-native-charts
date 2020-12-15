@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import { ActivityIndicator, View } from 'react-native';
 
-import { LineChart, XAxis, YAxis } from 'react-native-svg-charts';
+import { Grid, XAxis, YAxis, AreaChart } from 'react-native-svg-charts';
+import * as shape from 'd3-shape';
 
 function SalesReportLineChart({ chartDimensions, chartData }) {
   return chartDimensions ? (
@@ -21,11 +22,12 @@ function SalesReportLineChart({ chartDimensions, chartData }) {
         formatLabel={item => `R$ ${item}`}
       />
       <View style={{ flex: 1 }}>
-        <LineChart
+        <AreaChart
           data={chartData.data}
+          curve={shape.curveNatural}
           svg={{
             strokeWidth: 4,
-            stroke: 'rgba(175, 220, 139, 0.7)',
+            fill: 'rgba(175, 220, 139, 0.7)',
           }}
           contentInset={{
             top: 12,
@@ -38,7 +40,10 @@ function SalesReportLineChart({ chartDimensions, chartData }) {
             width: chartDimensions.width,
             height: chartDimensions.height - 12,
           }}
-        />
+        >
+          <Grid />
+        </AreaChart>
+
         <XAxis
           data={chartData.data}
           svg={{ fontSize: 12, fill: '#9094AD' }}
